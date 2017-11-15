@@ -23,8 +23,7 @@ the provided critical distance from each other.
 }
 \examples{
 # Function call
-euclidean_linker(inputMatrix,critDist)
-
+\dontrun{euclidean_linker(inputMatrix,critDist)}
 }
 \author{
 Zach Colburn

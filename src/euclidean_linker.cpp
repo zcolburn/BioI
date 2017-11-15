@@ -19,8 +19,8 @@ using namespace Rcpp;
 //' @author Zach Colburn
 //' @examples
 //' # Function call
-//' euclidean_linker(inputMatrix,critDist)
-//'
+//' \dontrun{euclidean_linker(inputMatrix,critDist)}
+//' @export
 // [[Rcpp::export]]
 Rcpp::NumericVector euclidean_linker(Rcpp::NumericMatrix input, double critDist) {
   // Initialize variables

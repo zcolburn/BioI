@@ -35,8 +35,7 @@ the same dimension.
 }
 \examples{
 # Function call
-shifter(t0, t1, xSeq, ySeq, searchBoxRadius, matchBoxRadius, shiftSkipper)
-
+\dontrun{shifter(t0, t1, xSeq, ySeq, searchBoxRadius, matchBoxRadius, shiftSkipper)}
 }
 \author{
 Zach Colburn

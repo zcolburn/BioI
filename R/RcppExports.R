@@ -16,8 +16,8 @@
 #' @author Zach Colburn
 #' @examples
 #' # Function call
-#' euclidean_linker(inputMatrix,critDist)
-#'
+#' \dontrun{euclidean_linker(inputMatrix,critDist)}
+#' @export
 euclidean_linker <- function(input, critDist) {
     .Call(`_Bioi_euclidean_linker`, input, critDist)
 }
@@ -40,8 +40,8 @@ euclidean_linker <- function(input, critDist) {
 #' @author Zach Colburn
 #' @examples
 #' # Function call
-#' find_min_dists(mOne, mTwo)
-#'
+#' \dontrun{find_min_dists(mOne, mTwo)}
+#' @export
 find_min_dists <- function(mOne, mTwo) {
     .Call(`_Bioi_find_min_dists`, mOne, mTwo)
 }
@@ -62,8 +62,8 @@ find_min_dists <- function(mOne, mTwo) {
 #' @author Zach Colburn
 #' @examples
 #' # Function call
-#' identify_thresholded_objects(img, pixRange)
-#'
+#' \dontrun{identify_thresholded_objects(img, pixRange)}
+#' @export
 identify_thresholded_objects <- function(img, pixRange) {
     .Call(`_Bioi_identify_thresholded_objects`, img, pixRange)
 }
@@ -90,8 +90,8 @@ identify_thresholded_objects <- function(img, pixRange) {
 #' @author Zach Colburn
 #' @examples
 #' # Function call
-#' shifter(t0, t1, xSeq, ySeq, searchBoxRadius, matchBoxRadius, shiftSkipper)
-#'
+#' \dontrun{shifter(t0, t1, xSeq, ySeq, searchBoxRadius, matchBoxRadius, shiftSkipper)}
+#' @export
 shifter <- function(t0, t1, xSeq, ySeq, searchBoxRadius, matchBoxRadius, shiftSkipper) {
     .Call(`_Bioi_shifter`, t0, t1, xSeq, ySeq, searchBoxRadius, matchBoxRadius, shiftSkipper)
 }

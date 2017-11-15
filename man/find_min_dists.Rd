@@ -26,8 +26,7 @@ operations on neighboring blocks.
 }
 \examples{
 # Function call
-find_min_dists(mOne, mTwo)
-
+\dontrun{find_min_dists(mOne, mTwo)}
 }
 \author{
 Zach Colburn

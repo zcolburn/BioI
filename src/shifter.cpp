@@ -23,8 +23,8 @@ using namespace Rcpp;
 //' @author Zach Colburn
 //' @examples
 //' # Function call
-//' shifter(t0, t1, xSeq, ySeq, searchBoxRadius, matchBoxRadius, shiftSkipper)
-//'
+//' \dontrun{shifter(t0, t1, xSeq, ySeq, searchBoxRadius, matchBoxRadius, shiftSkipper)}
+//' @export
 // [[Rcpp::export]]
 List shifter(
     NumericMatrix t0,

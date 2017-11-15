@@ -17,8 +17,8 @@ using namespace Rcpp;
 //' @author Zach Colburn
 //' @examples
 //' # Function call
-//' identify_thresholded_objects(img, pixRange)
-//'
+//' \dontrun{identify_thresholded_objects(img, pixRange)}
+//' @export
 // [[Rcpp::export]]
 NumericMatrix identify_thresholded_objects(NumericMatrix img, int pixRange) {
   // Get the image dimensions

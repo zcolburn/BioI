@@ -21,8 +21,8 @@ using namespace Rcpp;
 //' @author Zach Colburn
 //' @examples
 //' # Function call
-//' find_min_dists(mOne, mTwo)
-//'
+//' \dontrun{find_min_dists(mOne, mTwo)}
+//' @export
 // [[Rcpp::export]]
 Rcpp::DataFrame find_min_dists(NumericMatrix mOne, NumericMatrix mTwo) {
   // Get number of points in each matrix

@@ -24,8 +24,7 @@ are the same integer corresponding to that object's cluster number.
 }
 \examples{
 # Function call
-identify_thresholded_objects(img, pixRange)
-
+\dontrun{identify_thresholded_objects(img, pixRange)}
 }
 \author{
 Zach Colburn
