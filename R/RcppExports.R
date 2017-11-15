@@ -19,7 +19,7 @@
 #' \dontrun{euclidean_linker(inputMatrix,critDist)}
 #' @export
 euclidean_linker <- function(input, critDist) {
-    .Call(`_Bioi_euclidean_linker`, input, critDist)
+    .Call('_Bioi_euclidean_linker', PACKAGE = 'Bioi', input, critDist)
 }
 
 #' Find the shortest distance between each point in one data set and the points
@@ -43,7 +43,7 @@ euclidean_linker <- function(input, critDist) {
 #' \dontrun{find_min_dists(mOne, mTwo)}
 #' @export
 find_min_dists <- function(mOne, mTwo) {
-    .Call(`_Bioi_find_min_dists`, mOne, mTwo)
+    .Call('_Bioi_find_min_dists', PACKAGE = 'Bioi', mOne, mTwo)
 }
 
 #' Group continuous, thresholded objects in rasterized objects.
@@ -65,7 +65,7 @@ find_min_dists <- function(mOne, mTwo) {
 #' \dontrun{identify_thresholded_objects(img, pixRange)}
 #' @export
 identify_thresholded_objects <- function(img, pixRange) {
-    .Call(`_Bioi_identify_thresholded_objects`, img, pixRange)
+    .Call('_Bioi_identify_thresholded_objects', PACKAGE = 'Bioi', img, pixRange)
 }
 
 #' Identify the local shift between two temporally separated images.
@@ -93,6 +93,6 @@ identify_thresholded_objects <- function(img, pixRange) {
 #' \dontrun{shifter(t0, t1, xSeq, ySeq, searchBoxRadius, matchBoxRadius, shiftSkipper)}
 #' @export
 shifter <- function(t0, t1, xSeq, ySeq, searchBoxRadius, matchBoxRadius, shiftSkipper) {
-    .Call(`_Bioi_shifter`, t0, t1, xSeq, ySeq, searchBoxRadius, matchBoxRadius, shiftSkipper)
+    .Call('_Bioi_shifter', PACKAGE = 'Bioi', t0, t1, xSeq, ySeq, searchBoxRadius, matchBoxRadius, shiftSkipper)
 }
 
