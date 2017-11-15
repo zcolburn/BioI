@@ -1,0 +1,13 @@
+Package: Bioi
+Type: Package
+Title: Biological Image Processing Functions
+Version: 0.1.0
+Author: Zachary Colburn
+Maintainer: Zachary Colburn <zcolburn@gmail.com>
+Description: This package provides a set of function for analyzing cell biological images. The functionality includes functions for grouping contiguous blocks in thresholded images, measuring the distances between PALM/iPALM localizations, and performing single linkage clustering.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports: Rcpp (>= 0.12.13)
+LinkingTo: Rcpp
+RoxygenNote: 6.0.1

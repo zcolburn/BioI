@@ -1,0 +1,2 @@
+useDynLib(Bioi, .registration = TRUE)
+exportPattern("^.+")
