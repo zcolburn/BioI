@@ -3,6 +3,10 @@ using namespace Rcpp;
 
 #include<cmath>
 
+//' @title For all points in matrix 1, return the distance to and index of the
+//' nearest point in matrix 2.
+//'
+//' @description
 //' Find the shortest distance between each point in one data set and the points
 //' in a second set.
 //'
@@ -12,19 +16,34 @@ using namespace Rcpp;
 //' into blocks, opeartes on the data in each block, and then performs linking
 //' operations on neighboring blocks.
 //'
-//' @title For all points in matrix 1, return the distance and index of the
-//' nearest point in matrix 2.
-//'
 //' @param mOne A numeric matrix where each row is a localization and each
 //' column is a spatial axis.
-//' @param mTwo A matrix with the same number of columns as mOne.
+//' @param mTwo A numeric matrix with the same number of columns as mOne.
+//'
 //' @author Zach Colburn
+//'
 //' @examples
-//' # Function call
-//' \dontrun{find_min_dists(mOne, mTwo)}
-//' @export
-// [[Rcpp::export]]
-Rcpp::DataFrame find_min_dists(NumericMatrix mOne, NumericMatrix mTwo) {
+//' set.seed(10)
+//'
+//' mOne <- as.matrix(data.frame(
+//' x = rnorm(10),
+//' y = rbinom(10, 100, 0.5),
+//' z = runif(10)
+//' ))
+//'
+//' mTwo <- as.matrix(data.frame(
+//' x = rnorm(20),
+//' y = rbinom(20, 100, 0.5),
+//' z = runif(20)
+//' ))
+//'
+//' find_min_dists_cpp(mOne, mTwo)
+//'
+//' @import Rcpp
+//'
+//' @useDynLib Bioi, .registration = TRUE
+//[[Rcpp::export(.find_min_dists_cpp)]]
+Rcpp::DataFrame find_min_dists_cpp(NumericMatrix mOne, NumericMatrix mTwo) {
   // Get number of points in each matrix
   //
   // mon = matrix one number of points

@@ -5,69 +5,27 @@
 
 using namespace Rcpp;
 
-// euclidean_linker
-Rcpp::NumericVector euclidean_linker(Rcpp::NumericMatrix input, double critDist);
-RcppExport SEXP _Bioi_euclidean_linker(SEXP inputSEXP, SEXP critDistSEXP) {
+// euclidean_linker_cpp
+Rcpp::NumericVector euclidean_linker_cpp(Rcpp::NumericMatrix input, double critDist);
+RcppExport SEXP _Bioi_euclidean_linker_cpp(SEXP inputSEXP, SEXP critDistSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type input(inputSEXP);
     Rcpp::traits::input_parameter< double >::type critDist(critDistSEXP);
-    rcpp_result_gen = Rcpp::wrap(euclidean_linker(input, critDist));
+    rcpp_result_gen = Rcpp::wrap(euclidean_linker_cpp(input, critDist));
     return rcpp_result_gen;
 END_RCPP
 }
-// find_min_dists
-Rcpp::DataFrame find_min_dists(NumericMatrix mOne, NumericMatrix mTwo);
-RcppExport SEXP _Bioi_find_min_dists(SEXP mOneSEXP, SEXP mTwoSEXP) {
+// find_min_dists_cpp
+Rcpp::DataFrame find_min_dists_cpp(NumericMatrix mOne, NumericMatrix mTwo);
+RcppExport SEXP _Bioi_find_min_dists_cpp(SEXP mOneSEXP, SEXP mTwoSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type mOne(mOneSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type mTwo(mTwoSEXP);
-    rcpp_result_gen = Rcpp::wrap(find_min_dists(mOne, mTwo));
+    rcpp_result_gen = Rcpp::wrap(find_min_dists_cpp(mOne, mTwo));
     return rcpp_result_gen;
 END_RCPP
-}
-// identify_thresholded_objects
-NumericMatrix identify_thresholded_objects(NumericMatrix img, int pixRange);
-RcppExport SEXP _Bioi_identify_thresholded_objects(SEXP imgSEXP, SEXP pixRangeSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type img(imgSEXP);
-    Rcpp::traits::input_parameter< int >::type pixRange(pixRangeSEXP);
-    rcpp_result_gen = Rcpp::wrap(identify_thresholded_objects(img, pixRange));
-    return rcpp_result_gen;
-END_RCPP
-}
-// shifter
-List shifter(NumericMatrix t0, NumericMatrix t1, NumericVector xSeq, NumericVector ySeq, int searchBoxRadius, int matchBoxRadius, int shiftSkipper);
-RcppExport SEXP _Bioi_shifter(SEXP t0SEXP, SEXP t1SEXP, SEXP xSeqSEXP, SEXP ySeqSEXP, SEXP searchBoxRadiusSEXP, SEXP matchBoxRadiusSEXP, SEXP shiftSkipperSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type t0(t0SEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type t1(t1SEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type xSeq(xSeqSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type ySeq(ySeqSEXP);
-    Rcpp::traits::input_parameter< int >::type searchBoxRadius(searchBoxRadiusSEXP);
-    Rcpp::traits::input_parameter< int >::type matchBoxRadius(matchBoxRadiusSEXP);
-    Rcpp::traits::input_parameter< int >::type shiftSkipper(shiftSkipperSEXP);
-    rcpp_result_gen = Rcpp::wrap(shifter(t0, t1, xSeq, ySeq, searchBoxRadius, matchBoxRadius, shiftSkipper));
-    return rcpp_result_gen;
-END_RCPP
-}
-
-static const R_CallMethodDef CallEntries[] = {
-    {"_Bioi_euclidean_linker", (DL_FUNC) &_Bioi_euclidean_linker, 2},
-    {"_Bioi_find_min_dists", (DL_FUNC) &_Bioi_find_min_dists, 2},
-    {"_Bioi_identify_thresholded_objects", (DL_FUNC) &_Bioi_identify_thresholded_objects, 2},
-    {"_Bioi_shifter", (DL_FUNC) &_Bioi_shifter, 7},
-    {NULL, NULL, 0}
-};
-
-RcppExport void R_init_Bioi(DllInfo *dll) {
-    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
-    R_useDynamicSymbols(dll, FALSE);
 }

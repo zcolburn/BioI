@@ -1,13 +1,19 @@
 Package: Bioi
-Type: Package
-Title: Biological Image Processing Functions
-Version: 0.1.0
+Title: Biological Image Analysis
+Version: 0.2.0
 Author: Zachary Colburn
 Maintainer: Zachary Colburn <zcolburn@gmail.com>
-Description: This package provides a set of function for analyzing cell biological images. The functionality includes functions for grouping contiguous blocks in thresholded images, measuring the distances between PALM/iPALM localizations, and performing single linkage clustering.
+Description: This package provides a set of functions for analyzing cell biological images. These include functions for performing connected component labeling, measuring the distances between PALM/iPALM localizations, and performing single linkage clustering.
+Depends: R (>= 3.4.3)
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-Imports: Rcpp (>= 0.12.13)
+Imports: Rcpp(>= 0.12.13),
+  assertthat(>= 0.2.0),
+  testthat(>= 2.0.0)
 LinkingTo: Rcpp
 RoxygenNote: 6.0.1
+Suggests: knitr,
+    rmarkdown,
+    ggplot2
+VignetteBuilder: knitr
