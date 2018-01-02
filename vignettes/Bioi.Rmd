@@ -24,9 +24,7 @@ Bioi provides functions to perform connected component labeling on n-dimensional
 Dual channel PALM or iPALM data can represent the localizations of two distinct fluorophore-labeled proteins. To determine the minimum distance separating each localization of protein A from protein B, the following code could be implemented. Each row in the output of find_min_dists corresponds to the point denoted by the same row in mOne. "dist" is the distance to the nearest point in mTwo, whose row number in mTwo is given in the "index" column.
 
 
-```{r}
-library(Bioi)
-
+```{r,eval=FALSE}
 # Generate two data sets to simulate 3D PALM data.
 set.seed(10)
 
@@ -51,7 +49,7 @@ find_min_dists(mOne, mTwo)
 PALM/iPALM localizations in very close proximity may belong to the same superstructure, for example a single focal adhesion. By linking localizations separated by less than some empirically determined distance, these different super structures can be identified. Below, 2D PALM data is simulated and all points falling within a distance of 0.8 are linked.
 
 
-```{r}
+```{r,eval=FALSE}
 # Generate random data.
 set.seed(10)
 input <- as.matrix(data.frame(x=rnorm(10),y=rnorm(10)))
@@ -64,7 +62,7 @@ print(groups)
 
 
 Clusters can be easily visualized using ggplot2.
-```{r, eval=FALSE}
+```{r,eval=FALSE}
 library(ggplot2)
 input <- as.data.frame(input)
 input$group <- as.character(groups)
@@ -76,7 +74,7 @@ ggplot(input, aes(x, y, colour = group)) + geom_point(size = 3)
 Following background subtraction and thresholding, distinct cellular structures (focal adhesions for example) can be identified in fluorescent microscopy images. Array elements that are connected horizontally/vertically or diagonally are labeled with the same group number. Each contiguous object is labeled with a different group number. The function find_blobs can be used to implement this functionality in 1 or more dimensions. Below, this operations is performed on a matrix structure.
 
 
-```{r}
+```{r,eval=FALSE}
 # Generate a random matrix.
 set.seed(10)
 mat <- matrix(runif(70), nrow = 7)
