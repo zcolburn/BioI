@@ -64,7 +64,7 @@ print(groups)
 
 
 Clusters can be easily visualized using ggplot2.
-```{r}
+```{r,eval=FALSE}
 library(ggplot2)
 input <- as.data.frame(input)
 input$group <- as.character(groups)
