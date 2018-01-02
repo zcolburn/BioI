@@ -1,6 +1,6 @@
 Package: Bioi
 Title: Biological Image Analysis
-Version: 0.2.0
+Version: 0.2.1
 Author: Zachary Colburn
 Maintainer: Zachary Colburn <zcolburn@gmail.com>
 Description: This package provides a set of functions for analyzing cell biological images. These include functions for performing connected component labeling, measuring the distances between PALM/iPALM localizations, and performing single linkage clustering.
