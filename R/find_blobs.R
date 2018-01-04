@@ -2,15 +2,15 @@
 #'
 #' @description
 #' Perform connected-component labeling to group continuous, thresholded
-#' objects in n-dimensional arrays.
+#' objects in 3-dimensional arrays.
 #'
-#' This function takes a vector, matrix, or n-dimensional array where each
+#' This function takes a vector, matrix, or 3-dimensional array where each
 #' element is TRUE if it corresponds to an object-positive index or FALSE if it
 #' corresponds to a background index. An object of the same dimension as the
 #' input is returned. All connected object indices take the value of their
 #' group number and all background indices take the value NA.
 #'
-#' @param arr A vector, matrix, or n-dimensional array where object-positive
+#' @param arr A vector, matrix, or 3-dimensional array where object-positive
 #' elements are denoted by the value TRUE and background elements are denoted
 #' by the value FALSE.
 #'
@@ -56,10 +56,10 @@ find_blobs <- function(arr) {
   }
 
   # Use the euclidean_linker_cpp function to link neighboring object indices.
-  # Since the critical distance is sqrt(2), every neighboring object index
-  # (both horizontally/vertically and diagonally) will be joined. "links" is a
-  # vector of group numbers.
-  links <- .euclidean_linker_cpp(input, sqrt(2))
+  # Since the critical distance is sqrt(3), every neighboring object index
+  # (both horizontally/vertically and diagonally) will be joined in 1, 2, or 3
+  # dimensions. "links" is a vector of group numbers.
+  links <- .euclidean_linker_cpp(input, sqrt(3))
 
   # Assign indices in the output object their respective group number.
   output[input] <- links

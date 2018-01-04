@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 ```
 
 
-Bioi provides functions to perform connected component labeling on n-dimensional arrays, single linkage clustering, and identification of the nearest neighboring point in a second data set.
+Bioi provides functions to perform connected component labeling on 1, 2, or 3 dimensional arrays, single linkage clustering, and identification of the nearest neighboring point in a second data set.
 
 
 # Determine the minimum separation distance between two sets of points
@@ -73,7 +73,7 @@ ggplot(input, aes(x, y, colour = group)) + geom_point(size = 3)
 
 
 # Label connected components (i.e. find contiguous blobs)
-Following background subtraction and thresholding, distinct cellular structures (focal adhesions for example) can be identified in fluorescent microscopy images. Array elements that are connected horizontally/vertically or diagonally are labeled with the same group number. Each contiguous object is labeled with a different group number. The function find_blobs can be used to implement this functionality in 1 or more dimensions. Below, this operations is performed on a matrix structure.
+Following background subtraction and thresholding, distinct cellular structures (focal adhesions for example) can be identified in fluorescent microscopy images. Array elements that are connected horizontally/vertically or diagonally are labeled with the same group number. Each contiguous object is labeled with a different group number. The function find_blobs can be used to implement this functionality in 1, 2, or 3 dimensions. Below, this operations is performed on a matrix structure.
 
 
 ```{r}
