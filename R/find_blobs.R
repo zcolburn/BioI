@@ -65,7 +65,7 @@ find_blobs <- function(arr) {
   output[input] <- links
 
   # Convert the output object to the class of the original arr object.
-  if(initial_class == "vector"){
+  if(initial_class == "logical"){
     output <- as.vector(output)
   }else if(initial_class == "matrix"){
     output <- as.matrix(output)

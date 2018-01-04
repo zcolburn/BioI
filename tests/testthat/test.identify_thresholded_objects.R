@@ -25,9 +25,6 @@ test_that(
   }
 )
 
-
-
-
 test_that(
   "outputs are valid",
   {
@@ -36,6 +33,25 @@ test_that(
       mat <- matrix(runif(70), nrow = 7)
       mat[mat < 0.8] <- 0
       identify_thresholded_objects(mat)
+    },
+    structure(c(NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,
+                NA, NA, NA, NA, NA, NA, 10, 10, NA, NA, NA, NA, NA, 10, NA, NA,
+                NA, NA, NA, NA, 10, NA, NA, 11, 11, NA, NA, NA, NA, NA, NA, NA,
+                NA, NA, NA, NA, 6, NA, 7, NA, NA, NA, NA, NA, NA, NA, NA, NA,
+                NA, NA, NA, 8, NA, NA, NA, NA, NA), .Dim = c(7L, 10L))
+    )
+  }
+)
+
+
+test_that(
+  "use of pixRange causes no problems",
+  {
+    expect_equal({
+      set.seed(10)
+      mat <- matrix(runif(70), nrow = 7)
+      mat[mat < 0.8] <- 0
+      identify_thresholded_objects(mat, 48)# 51 beacuse pixRange defaults to 50.
     },
     structure(c(NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,
                 NA, NA, NA, NA, NA, NA, 10, 10, NA, NA, NA, NA, NA, 10, NA, NA,
