@@ -13,6 +13,12 @@ os:
   - linux
   - osx
 
+# covr does not work on the combination of osx devel on travis-ci.
+matrix:
+  exclude:
+  - os: osx
+    r: devel
+
 r_packages:
   - covr
 
