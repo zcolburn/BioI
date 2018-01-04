@@ -40,6 +40,7 @@ Rcpp::NumericVector euclidean_linker_cpp(
   // Initialize output group vector
   Rcpp::LogicalVector inGroup(input.nrow(),false);
   Rcpp::NumericVector output(input.nrow(),0.0);
+
   float gn=0;
   for(float i=0;i<output.length();i++){
     output(i)=gn;
