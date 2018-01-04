@@ -13,12 +13,6 @@ os:
   - linux
   - osx
 
-# covr does not work on the combination of osx devel on travis-ci.
-matrix:
-  exclude:
-  - os: osx
-    r: devel
-
 # Report coverage for the release version.
 after_success:
   - test $TRAVIS_R_VERSION_STRING = 'release' && Rscript -e 'covr::codecov()'
