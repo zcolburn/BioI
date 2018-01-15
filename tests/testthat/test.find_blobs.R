@@ -24,6 +24,8 @@ test_that(
 )
 
 
+
+
 test_that(
   "outputs are valid",
   {
@@ -43,10 +45,10 @@ test_that(
       find_blobs(logical_mat)
     },
     structure(c(NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,
-                NA, NA, NA, NA, NA, NA, 1, 1, NA, NA, NA, NA, NA, 1, NA, NA,
-                NA, NA, NA, NA, 1, NA, NA, 2, 2, NA, NA, NA, NA, NA, NA, NA,
-                NA, NA, NA, NA, 3, NA, 4, NA, NA, NA, NA, NA, NA, NA, NA, NA,
-                NA, NA, NA, 5, NA, NA, NA, NA, NA), .Dim = c(7L, 10L),
+                NA, NA, NA, NA, NA, NA, 10, 10, NA, NA, NA, NA, NA, 10, NA, NA,
+                NA, NA, NA, NA, 10, NA, NA, 11, 11, NA, NA, NA, NA, NA, NA, NA,
+                NA, NA, NA, NA, 6, NA, 7, NA, NA, NA, NA, NA, NA, NA, NA, NA,
+                NA, NA, NA, 8, NA, NA, NA, NA, NA), .Dim = c(7L, 10L),
               .Dimnames = list(
                   c("a", "b", "c", "d", "e", "f", "g"),
                   c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")))
@@ -63,11 +65,10 @@ test_that(
       # Find blobs.
       find_blobs(vec)
     },
-    structure(c(1, NA, NA, NA, NA, 2, 2, 2, NA, NA, NA, NA, NA, NA,
-                3, 3, 3, 3, NA, NA),
-              .Names = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10",
-                         "11", "12", "13", "14", "15", "16", "17", "18", "19",
-                         "20"))
+      structure(c(0, NA, NA, NA, NA, 9, 9, 9, NA, NA, NA, NA, NA, NA,
+                  10, 10, 10, 10, NA, NA), .Names = c("1", "2", "3", "4", "5",
+                  "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
+                  "17", "18", "19", "20"))
     )
 
 
@@ -76,7 +77,7 @@ test_that(
       mat <- matrix(runif(70), nrow = 7) > 0.8
       find_blobs(mat[,1,drop=FALSE])
     },
-    structure(c(NA, NA, NA, NA, NA, NA, NA), .Dim = c(7L, 1L))
+      structure(c(NA, NA, NA, NA, NA, NA, NA), .Dim = c(7L, 1L))
     )
 
     expect_equal({
@@ -84,7 +85,7 @@ test_that(
       mat <- matrix(runif(70), nrow = 7) > 0.8
       find_blobs(mat[1,,drop=FALSE])
     },
-    structure(c(NA, NA, NA, NA, NA, NA, NA, 1, NA, NA), .Dim = c(1L, 10L))
+      structure(c(NA, NA, NA, NA, NA, NA, NA, 0, NA, NA), .Dim = c(1L, 10L))
     )
   }
 )
