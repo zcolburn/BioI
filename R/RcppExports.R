@@ -14,6 +14,8 @@
 #' column is a spatial axis.
 #' @param critDist The critical distance for which localizations nearer than
 #' this distance are deemed part of the same group.
+#' @param use_prog_bar A logical indicating whether a progress bar should be
+#' used. This must be set to false when running in parallel.
 #'
 #' @author Zach Colburn
 #'
@@ -24,8 +26,8 @@
 #' @import Rcpp
 #'
 #' @useDynLib Bioi, .registration = TRUE
-.euclidean_linker_cpp <- function(input, critDist) {
-    .Call(`_Bioi_euclidean_linker_cpp`, input, critDist)
+.euclidean_linker_cpp <- function(input, critDist, use_prog_bar = TRUE) {
+    .Call(`_Bioi_euclidean_linker_cpp`, input, critDist, use_prog_bar)
 }
 
 #' @title For all points in matrix 1, return the distance to and index of the

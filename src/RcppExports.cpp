@@ -6,14 +6,15 @@
 using namespace Rcpp;
 
 // euclidean_linker_cpp
-Rcpp::NumericVector euclidean_linker_cpp(Rcpp::NumericMatrix input, double critDist);
-RcppExport SEXP _Bioi_euclidean_linker_cpp(SEXP inputSEXP, SEXP critDistSEXP) {
+Rcpp::NumericVector euclidean_linker_cpp(Rcpp::NumericMatrix input, double critDist, bool use_prog_bar);
+RcppExport SEXP _Bioi_euclidean_linker_cpp(SEXP inputSEXP, SEXP critDistSEXP, SEXP use_prog_barSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericMatrix >::type input(inputSEXP);
     Rcpp::traits::input_parameter< double >::type critDist(critDistSEXP);
-    rcpp_result_gen = Rcpp::wrap(euclidean_linker_cpp(input, critDist));
+    Rcpp::traits::input_parameter< bool >::type use_prog_bar(use_prog_barSEXP);
+    rcpp_result_gen = Rcpp::wrap(euclidean_linker_cpp(input, critDist, use_prog_bar));
     return rcpp_result_gen;
 END_RCPP
 }

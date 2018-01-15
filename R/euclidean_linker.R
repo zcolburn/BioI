@@ -10,6 +10,17 @@
 #' column is a spatial axis.
 #' @param critDist The critical distance for which localizations nearer than
 #' this distance are deemed part of the same group.
+#' @param use_prog_bar TRUE/FALSE indicating whether a progress bar should be
+#' used. This is only available when run_parallel is FALSE.
+#' @param run_parallel TRUE/FALSE indicating whether operations should be
+#' performed in parallel. This is only valid if partitioning is performed.
+#' @param num_cores The number of cores to use if running in parallel.
+#' @param partition_req The minimum number of points required to create a new
+#' partition.
+#' @param parallel_call_depth The number of levels of partitioning that should
+#' be performed before terminating calls to run operations in parallel. The
+#' number of threads opened when running in parallel is equal to
+#' 2^(parallel_call_depth)*num_cores.
 #'
 #' @author Zach Colburn
 #'
@@ -23,16 +34,80 @@
 #'
 #' @export
 #'
-#' @importFrom assertthat assert_that is.number
-euclidean_linker <- function(input, critDist) {
+#' @importFrom assertthat assert_that is.number is.flag
+#' @importFrom parallel parLapply makeCluster detectCores
+euclidean_linker <- function(
+  input,
+  critDist,
+  use_prog_bar = TRUE,
+  run_parallel = FALSE,
+  num_cores = NULL,
+  partition_req = 5000,
+  parallel_call_depth = 3
+) {
   assert_that(class(input) == "matrix")
-  assert_that(length(input) > 1)
   assert_that(class(input[1]) %in% c("integer", "numeric"))
-  assert_that(nrow(input) > 1)
+  assert_that(nrow(input) >= 1)
+  assert_that(nrow(input) < 2147483646)# The C++ max limit for an int minus 1.
   assert_that(ncol(input) > 0)
   assert_that(is.number(critDist))
   assert_that(critDist > 0)
+  assert_that(is.flag(use_prog_bar))
+  assert_that(is.flag(run_parallel))
+  assert_that(
+    is.number(partition_req) &&
+      (partition_req >= 100) &&
+      (as.integer(partition_req) == partition_req)
+  )
+  assert_that(
+    is.null(num_cores) ||
+      is.number(num_cores)
+  )
+  if(run_parallel){use_prog_bar <- FALSE;}
+  if(
+    is.null(num_cores) && run_parallel
+  ){
+    num_cores <- detectCores()
+  }else if(run_parallel){
+    assert_that(
+      (as.integer(num_cores) == num_cores) &&
+        (num_cores >= 2) &&
+        (num_cores <= detectCores())
+    )
+  }
 
-  .euclidean_linker_cpp(input, critDist)
+  # Return 1 if there is only a single input point.
+  if(nrow(input) == 1){
+    return(1)
+  }
+
+  # If partitioning:
+  if(nrow(input) > partition_req){
+    # This value is used an identifier of ungrouped points. It is used
+    # in ".euclidean_linker_cpp" and ".perform_grouping" as well. The value
+    # should not be changed.
+    no_group <- -1
+    groups <- .perform_partitioning(
+      input,
+      critDist = critDist,
+      use_prog_bar = FALSE,
+      run_parallel = run_parallel,
+      num_cores = num_cores,
+      partition_req = partition_req,
+      parallel_call_depth = parallel_call_depth
+    )
+    output <- as.numeric(factor(groups))
+    return(output)
+  }
+
+  # If not partitioning:
+  output <- .perform_grouping(
+    input,
+    critDist,
+    use_prog_bar = use_prog_bar
+  )
+
+  # Return the output.
+  output
 }
 
