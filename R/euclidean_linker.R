@@ -97,6 +97,10 @@ euclidean_linker <- function(
       parallel_call_depth = parallel_call_depth
     )
     output <- as.numeric(factor(groups))
+
+    # Ensure memory from any parallelized threads is retrieved
+    gc()
+
     return(output)
   }
 
