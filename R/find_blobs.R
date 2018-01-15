@@ -43,7 +43,7 @@ find_blobs <- function(arr) {
 
   # Convert arr to an array and store object indices in "input".
   arr <- as.array(arr)
-  input <- which(arr, arr.ind = TRUE)
+  input <- as.matrix(which(arr, arr.ind = TRUE))
 
   # Initialize the output object.
   output <- array(NA, dim = dim(arr), dimnames = dimnames(arr))
@@ -59,7 +59,7 @@ find_blobs <- function(arr) {
   # Since the critical distance is sqrt(3), every neighboring object index
   # (both horizontally/vertically and diagonally) will be joined in 1, 2, or 3
   # dimensions. "links" is a vector of group numbers.
-  links <- .euclidean_linker_cpp(input, sqrt(3))
+  links <- euclidean_linker(input, sqrt(3))
 
   # Assign indices in the output object their respective group number.
   output[input] <- links

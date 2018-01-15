@@ -7,15 +7,15 @@
 find_blobs(arr)
 }
 \arguments{
-\item{arr}{A vector, matrix, or n-dimensional array where object-positive
+\item{arr}{A vector, matrix, or 3-dimensional array where object-positive
 elements are denoted by the value TRUE and background elements are denoted
 by the value FALSE.}
 }
 \description{
 Perform connected-component labeling to group continuous, thresholded
-objects in n-dimensional arrays.
+objects in 3-dimensional arrays.
 
-This function takes a vector, matrix, or n-dimensional array where each
+This function takes a vector, matrix, or 3-dimensional array where each
 element is TRUE if it corresponds to an object-positive index or FALSE if it
 corresponds to a background index. An object of the same dimension as the
 input is returned. All connected object indices take the value of their
