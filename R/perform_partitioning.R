@@ -87,6 +87,20 @@
   stem <- (input[,dim_to_split] >= (mid_pos - critDist/2)) &
     (input[,dim_to_split] <= (mid_pos + critDist/2))
 
+  # If the stem and both partitions don't all have points then group now.
+  if(!(
+    (sum(stem) > 0) &&
+    (sum(partition == 1) > 0) &&
+    (sum(partition == 2) > 0)
+  )){
+    groups <- .perform_grouping(
+      input,
+      critDist,
+      use_prog_bar = use_prog_bar
+    )
+    return(groups)
+  }
+
   # Perform grouping.
   if(!run_parallel){
     groups <- lapply(
