@@ -89,9 +89,9 @@
 
   # If the stem and both partitions don't all have points then group now.
   if(!(
-    (sum(stem) > 0) &&
-    (sum(partition == 1) > 0) &&
-    (sum(partition == 2) > 0)
+    (sum(stem) >= 1) &&
+    (sum(partition == 1) >= 1) &&
+    (sum(partition == 2) >= 1)
   )){
     groups <- .perform_grouping(
       input,
