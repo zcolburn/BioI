@@ -5,7 +5,7 @@
 \title{Return the group number for each localization.}
 \usage{
 euclidean_linker(input, critDist, use_prog_bar = TRUE, run_parallel = FALSE,
-  num_cores = NULL, partition_req = 5000, parallel_call_depth = 3)
+  num_cores = NULL, partition_req = 5000, parallel_call_depth = 3, ...)
 }
 \arguments{
 \item{input}{A numeric matrix where each row is a localization and each
@@ -29,6 +29,9 @@ partition.}
 be performed before terminating calls to run operations in parallel. The
 number of threads opened when running in parallel is equal to
 2^(parallel_call_depth)*num_cores.}
+
+\item{...}{Additional parameters passed to euclidean_linker (i.e.
+finding_blobs).}
 }
 \description{
 Group PALM/iPALM localizations based on their physical separation distance

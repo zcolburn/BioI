@@ -21,6 +21,8 @@
 #' be performed before terminating calls to run operations in parallel. The
 #' number of threads opened when running in parallel is equal to
 #' 2^(parallel_call_depth)*num_cores.
+#' @param ... Additional parameters passed to euclidean_linker (i.e.
+#' finding_blobs).
 #'
 #' @author Zach Colburn
 #'
@@ -43,7 +45,8 @@ euclidean_linker <- function(
   run_parallel = FALSE,
   num_cores = NULL,
   partition_req = 5000,
-  parallel_call_depth = 3
+  parallel_call_depth = 3,
+  ...
 ) {
   assert_that(class(input) == "matrix")
   assert_that(class(input[1]) %in% c("integer", "numeric"))
@@ -75,6 +78,16 @@ euclidean_linker <- function(
         (num_cores <= detectCores())
     )
   }
+  finding_blobs <- FALSE
+  if("find_blobs" %in% names(match.call())){
+    assert_that(is.flag(match.call()[["find_blobs"]]))
+    finding_blobs <- match.call()[["find_blobs"]]
+  }
+  if(finding_blobs){
+    min_gap <- 6
+  }else{
+    min_gap <- 6*critDist
+  }
 
   # Return 1 if there is only a single input point.
   if(nrow(input) == 1){
@@ -82,11 +95,12 @@ euclidean_linker <- function(
   }
 
   # If partitioning:
-  if(nrow(input) > partition_req){
-    # This value is used an identifier of ungrouped points. It is used
+  if(nrow(input) >= partition_req){
+    # This value is used as an identifier of ungrouped points. It is used
     # in ".euclidean_linker_cpp" and ".perform_grouping" as well. The value
     # should not be changed.
     no_group <- -1
+
     groups <- .perform_partitioning(
       input,
       critDist = critDist,
@@ -94,11 +108,12 @@ euclidean_linker <- function(
       run_parallel = run_parallel,
       num_cores = num_cores,
       partition_req = partition_req,
-      parallel_call_depth = parallel_call_depth
+      parallel_call_depth = parallel_call_depth,
+      min_gap = min_gap
     )
     output <- as.numeric(factor(groups))
 
-    # Ensure memory from any parallelized threads is retrieved
+    # Ensure memory from any parallelized threads is retrieved.
     gc()
 
     return(output)

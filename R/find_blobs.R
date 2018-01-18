@@ -13,6 +13,17 @@
 #' @param arr A vector, matrix, or 3-dimensional array where object-positive
 #' elements are denoted by the value TRUE and background elements are denoted
 #' by the value FALSE.
+#' @param use_prog_bar TRUE/FALSE indicating whether a progress bar should be
+#' used. This is only available when run_parallel is FALSE.
+#' @param run_parallel TRUE/FALSE indicating whether operations should be
+#' performed in parallel. This is only valid if partitioning is performed.
+#' @param num_cores The number of cores to use if running in parallel.
+#' @param partition_req The minimum number of points required to create a new
+#' partition.
+#' @param parallel_call_depth The number of levels of partitioning that should
+#' be performed before terminating calls to run operations in parallel. The
+#' number of threads opened when running in parallel is equal to
+#' 2^(parallel_call_depth)*num_cores.
 #'
 #' @author Zach Colburn
 #'
@@ -29,13 +40,26 @@
 #'
 #' @export
 #'
-#' @importFrom assertthat assert_that noNA
-find_blobs <- function(arr) {
+#' @importFrom assertthat assert_that noNA is.number
+find_blobs <- function(
+  arr,
+  use_prog_bar = TRUE,
+  run_parallel = FALSE,
+  num_cores = NULL,
+  partition_req = NULL,
+  parallel_call_depth = 3
+) {
   # Perform type checking.
   assert_that(is.vector(arr) || is.matrix(arr) || is.array(arr))
   assert_that(length(arr) >= 1)
   assert_that(class(arr[1]) == "logical")
   assert_that(noNA(arr))
+  if(is.null(partition_req)){partition_req <- 1000000}
+  assert_that(
+    is.number(partition_req) &&
+      (as.integer(partition_req) == partition_req) &&
+      (partition_req > 0)
+  )
 
   # Get object class and attributes.
   initial_class <- class(arr)
@@ -59,7 +83,16 @@ find_blobs <- function(arr) {
   # Since the critical distance is sqrt(3), every neighboring object index
   # (both horizontally/vertically and diagonally) will be joined in 1, 2, or 3
   # dimensions. "links" is a vector of group numbers.
-  links <- euclidean_linker(input, sqrt(3))
+  links <- euclidean_linker(
+    input,
+    critDist = sqrt(3),
+    use_prog_bar = use_prog_bar,
+    run_parallel = run_parallel,
+    num_cores = num_cores,
+    partition_req = partition_req,
+    parallel_call_depth = parallel_call_depth,
+    find_blobs = TRUE
+  )
 
   # Assign indices in the output object their respective group number.
   output[input] <- links

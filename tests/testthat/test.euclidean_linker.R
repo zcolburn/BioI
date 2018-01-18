@@ -61,7 +61,15 @@ test_that(
       )
       unique(result)
     },
-      c(2, 3, 1)
+      c(3, 2, 1)
+    )
+
+    expect_equal({
+      mat <- matrix(TRUE, nrow = 501, ncol = 501)
+      result <- Bioi::find_blobs(mat)
+      unique(as.vector(result))
+    },
+    1
     )
   }
 )

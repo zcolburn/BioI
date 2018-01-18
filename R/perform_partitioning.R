@@ -21,6 +21,7 @@
 #' be performed before terminating calls to run operations in parallel. The
 #' number of threads opened when running in parallel is equal to
 #' 2^(parallel_call_depth)*num_cores.
+#' @param min_gap The minimum width of any dimension created during paritioning.
 #'
 #' @author Zach Colburn
 #'
@@ -37,10 +38,12 @@
   run_parallel = FALSE,
   num_cores = NULL,
   partition_req = 5000,
-  parallel_call_depth = 3
+  parallel_call_depth = 3,
+  min_gap = NULL
 ) {
   # Perform essential type checking.
   assert_that((class(input) == "matrix"))
+  assert_that(is.number(min_gap))
 
   # Define the ungrouped value. Don't change this.
   no_group <- -1
@@ -65,8 +68,8 @@
   # partition. Also, if the number of points in this partition is less than the
   # partition requirement, then perform grouping.
   if(
-    (max(ranges) <= 3*critDist) ||
-    (nrow(input) < partition_req)
+    (min(ranges) <= min_gap) ||
+    (nrow(input) <= partition_req)
   ){
     groups <- .perform_grouping(
       input,
@@ -83,9 +86,9 @@
 
   # Assign points to partitions and stem group.
   partition <- rep(1, nrow(input))
-  partition[input[,dim_to_split] < mid_pos] <- 2
-  stem <- (input[,dim_to_split] >= (mid_pos - critDist/2)) &
-    (input[,dim_to_split] <= (mid_pos + critDist/2))
+  partition[input[,dim_to_split] > mid_pos] <- 2
+  stem <- (input[,dim_to_split] >= (mid_pos - min_gap/2)) &
+    (input[,dim_to_split] < (mid_pos + min_gap/2))
 
   # If the stem and both partitions don't all have points then group now.
   if(!(
@@ -98,6 +101,7 @@
       critDist,
       use_prog_bar = use_prog_bar
     )
+    groups <- as.numeric(factor(groups))
     return(groups)
   }
 
@@ -110,13 +114,14 @@
         input[stem,, drop = FALSE]
       ),
       function(item){
-        result <- .perform_partitioning(
+        .perform_partitioning(
           item,
           critDist,
           use_prog_bar = FALSE,
           run_parallel = run_parallel,
           num_cores = NULL,
-          partition_req = partition_req
+          partition_req = partition_req,
+          min_gap = min_gap
         )
       }
     )
@@ -136,23 +141,26 @@
         num_cores,
         partition_req,
         parallel_call_depth,
-        .perform_partitioning
+        .perform_partitioning,
+        min_gap
       ){
-        result <- .perform_partitioning(
+        .perform_partitioning(
           item,
           critDist,
           use_prog_bar = FALSE,
           run_parallel = run_parallel,
           num_cores = num_cores,
           partition_req = partition_req,
-          parallel_call_depth = parallel_call_depth - 1
+          parallel_call_depth = parallel_call_depth - 1,
+          min_gap = min_gap
         )
       }, critDist,
       run_parallel,
       num_cores,
       partition_req,
       parallel_call_depth,
-      .perform_partitioning
+      .perform_partitioning,
+      min_gap
     )
   }
 
@@ -170,12 +178,12 @@
   # columns.
   mat[mat[,3] != -1, 3] <- mat[mat[,3] != -1, 3] + max(mat[, c(1,2)])
 
-
-
   # If there are no points in the stem, then retrieve the final group numbers.
   if(length(unique(mat[mat[,3] != no_group, 3])) == 0){
     mat <- mat[, 1:2, drop = FALSE]
-    groups <- apply(mat, 1, function(item){item[item != -1]})
+    groups <- t(mat)
+    groups <- groups[groups != no_group]
+    groups <- as.numeric(factor(groups))
     return(groups)
   }
 
@@ -231,7 +239,7 @@
     ),
     mode = "weak"
   )$membership
-  ## Convert mat to a matrix in order then update all group numbers accordingly.
+  ## Convert mat to a matrix then update all group numbers accordingly.
   mat <- as.matrix(mat)
   logicalVector <- (mat != no_group) & (as.character(mat) %in% names(members))
   mat[logicalVector] <- members[as.character(mat[logicalVector])] + maxGroup

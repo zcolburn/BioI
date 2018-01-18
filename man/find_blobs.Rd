@@ -4,12 +4,29 @@
 \alias{find_blobs}
 \title{Assign all neighboring pixels the same group number.}
 \usage{
-find_blobs(arr)
+find_blobs(arr, use_prog_bar = TRUE, run_parallel = FALSE,
+  num_cores = NULL, partition_req = NULL, parallel_call_depth = 3)
 }
 \arguments{
 \item{arr}{A vector, matrix, or 3-dimensional array where object-positive
 elements are denoted by the value TRUE and background elements are denoted
 by the value FALSE.}
+
+\item{use_prog_bar}{TRUE/FALSE indicating whether a progress bar should be
+used. This is only available when run_parallel is FALSE.}
+
+\item{run_parallel}{TRUE/FALSE indicating whether operations should be
+performed in parallel. This is only valid if partitioning is performed.}
+
+\item{num_cores}{The number of cores to use if running in parallel.}
+
+\item{partition_req}{The minimum number of points required to create a new
+partition.}
+
+\item{parallel_call_depth}{The number of levels of partitioning that should
+be performed before terminating calls to run operations in parallel. The
+number of threads opened when running in parallel is equal to
+2^(parallel_call_depth)*num_cores.}
 }
 \description{
 Perform connected-component labeling to group continuous, thresholded
