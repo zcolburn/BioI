@@ -9,29 +9,40 @@ r:
   - release
   - devel
 
-os:
-  - linux
-  - osx
+r_check_args: '--use-valgrind --as-cran'
 
-compiler:
-  - gcc
-  - clang
+addons:
+  apt:
+    packages:
+      - valgrind
+
+env:
+  - VALGRIND_OPTS='--leak-check=full --track-origins=yes'
 
 matrix:
   include:
+  # linux builds
+    # fedora builds
     - os: linux
       compiler: clang
-      addons:
-          apt:
-            packages: ['valgrind']
-      env: VALGRIND=1 OS=fedora
+      env: OS=fedora
 
     - os: linux
       compiler: gcc
-      addons:
-          apt:
-            packages: ['valgrind']
-      env: VALGRIND=1 OS=fedora
+      env: OS=fedora
+
+    # debian builds
+    - os: linux
+      compiler: gcc
+      env: OS=debian
+
+    # solaris builds
+    - os: linux
+      compiler: gcc
+      env: OS=solaris
+  # macOS builds
+    # solaris builds
+    - os: osx
 
 r_packages:
   - covr
