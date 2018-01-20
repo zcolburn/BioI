@@ -23,7 +23,13 @@ matrix:
     - os: linux
       compiler: gcc
       r: release
-      #r_check_args: '--use-valgrind'
+      r_check_args: '--use-valgrind'
+      env: OS=debian'
+
+    - os: linux
+      compiler: gcc
+      r: release
+      r_check_args: '--as-cran'
       env: OS=debian'
 
 
@@ -34,3 +40,6 @@ r_packages:
 # Report coverage for the release version.
 after_success:
   - test $TRAVIS_R_VERSION_STRING = 'release' && Rscript -e 'covr::codecov()'
+
+notifications:
+  email: false
