@@ -22,10 +22,9 @@ matrix:
 
     - os: linux
       compiler: gcc
-      r:
-        - release
+      r: release
       #r_check_args: '--use-valgrind'
-      env: OS=fedora'
+      env: OS=debian'
 
 
 
