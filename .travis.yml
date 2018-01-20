@@ -1,7 +1,7 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: R
-sudo: false
+sudo: true
 cache: packages
 
 r:
@@ -13,11 +13,15 @@ os:
   - linux
   - osx
 
-# covr does not work on the combination of osx devel on travis-ci.
-matrix:
-  exclude:
-  - os: osx
-    r: devel
+compiler:
+  - gcc
+  - clang
+
+env:
+  matrix:
+    - OS=fedora
+    - OS=ubuntu
+    - OS=debian
 
 r_packages:
   - covr
