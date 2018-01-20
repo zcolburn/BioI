@@ -24,7 +24,7 @@ matrix:
       compiler: gcc
       r:
         - release
-      r_check_args: '--use-valgrind'
+      #r_check_args: '--use-valgrind'
       env: OS=fedora'
 
 
