@@ -25,10 +25,6 @@ matrix:
       r:
         - release
       r_check_args: '--use-valgrind'
-      addons:
-        apt:
-          packages:
-            - valgrind
       env: OS=fedora'
 
 
