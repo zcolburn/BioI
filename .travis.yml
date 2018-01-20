@@ -24,6 +24,16 @@ matrix:
       compiler: gcc
       r:
         - release
+      r_check_args: '--use-valgrind --as-cran'
+      addons:
+        apt:
+          packages:
+            - valgrind
+      env: OS=fedora VALGRIND_OPTS='--leak-check=full --track-origins=yes'
+
+    - os: linux
+      compiler: gcc
+      r:
         - devel
       r_check_args: '--use-valgrind --as-cran'
       addons:
@@ -37,6 +47,16 @@ matrix:
       compiler: gcc
       r:
         - release
+      r_check_args: '--use-valgrind --as-cran'
+      addons:
+        apt:
+          packages:
+            - valgrind
+      env: OS=debian VALGRIND_OPTS='--leak-check=full --track-origins=yes'
+
+    - os: linux
+      compiler: gcc
+      r:
         - devel
       r_check_args: '--use-valgrind --as-cran'
       addons:
@@ -45,23 +65,19 @@ matrix:
             - valgrind
       env: OS=debian VALGRIND_OPTS='--leak-check=full --track-origins=yes'
 
-    # solaris builds
-    - os: linux
-      compiler: gcc
+  # macOS builds
+    - os: osx
       r:
         - release
-        - devel
       r_check_args: '--use-valgrind --as-cran'
       addons:
         apt:
           packages:
             - valgrind
-      env: OS=solaris VALGRIND_OPTS='--leak-check=full --track-origins=yes'
+      env: OS=fedora VALGRIND_OPTS='--leak-check=full --track-origins=yes'
 
-  # macOS builds
     - os: osx
       r:
-        - release
         - devel
       r_check_args: '--use-valgrind --as-cran'
       addons:
