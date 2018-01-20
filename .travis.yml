@@ -25,66 +25,12 @@ matrix:
       r:
         - release
       r_check_args: '--use-valgrind --as-cran'
-      addons:
-        apt:
-          packages:
-            - valgrind
+      before_install:
+        - sudo apt-get update -qq
+        - sudo apt-get install -qq valgrind
       env: OS=fedora VALGRIND_OPTS='--leak-check=full --track-origins=yes'
 
-    - os: linux
-      compiler: gcc
-      r:
-        - devel
-      r_check_args: '--use-valgrind --as-cran'
-      addons:
-        apt:
-          packages:
-            - valgrind
-      env: OS=fedora VALGRIND_OPTS='--leak-check=full --track-origins=yes'
 
-    # debian builds
-    - os: linux
-      compiler: gcc
-      r:
-        - release
-      r_check_args: '--use-valgrind --as-cran'
-      addons:
-        apt:
-          packages:
-            - valgrind
-      env: OS=debian VALGRIND_OPTS='--leak-check=full --track-origins=yes'
-
-    - os: linux
-      compiler: gcc
-      r:
-        - devel
-      r_check_args: '--use-valgrind --as-cran'
-      addons:
-        apt:
-          packages:
-            - valgrind
-      env: OS=debian VALGRIND_OPTS='--leak-check=full --track-origins=yes'
-
-  # macOS builds
-    - os: osx
-      r:
-        - release
-      r_check_args: '--use-valgrind --as-cran'
-      addons:
-        apt:
-          packages:
-            - valgrind
-      env: OS=fedora VALGRIND_OPTS='--leak-check=full --track-origins=yes'
-
-    - os: osx
-      r:
-        - devel
-      r_check_args: '--use-valgrind --as-cran'
-      addons:
-        apt:
-          packages:
-            - valgrind
-      env: OS=fedora VALGRIND_OPTS='--leak-check=full --track-origins=yes'
 
 r_packages:
   - covr
