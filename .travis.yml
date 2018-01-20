@@ -18,19 +18,20 @@ compiler:
   - clang
 
 matrix:
-  - os: linux
-    compiler: clang
-    addons:
-        apt:
-          packages: ['valgrind']
-    env: VALGRIND=1 OS=fedora
+  include:
+    - os: linux
+      compiler: clang
+      addons:
+          apt:
+            packages: ['valgrind']
+      env: VALGRIND=1 OS=fedora
 
-  - os: linux
-    compiler: gcc
-    addons:
-        apt:
-          packages: ['valgrind']
-    env: VALGRIND=1 OS=fedora
+    - os: linux
+      compiler: gcc
+      addons:
+          apt:
+            packages: ['valgrind']
+      env: VALGRIND=1 OS=fedora
 
 r_packages:
   - covr
