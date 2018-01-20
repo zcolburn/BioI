@@ -24,7 +24,11 @@ matrix:
       compiler: gcc
       r: release
       r_check_args: '--use-valgrind'
-      env: OS=debian'
+      addons:
+        apt:
+          packages:
+            - valgrind
+      env: OS=debian' VALGRIND_OPTS='--leak-check=full --track-origins=yes'
 
     - os: linux
       compiler: gcc
