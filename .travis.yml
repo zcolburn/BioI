@@ -24,12 +24,12 @@ matrix:
       compiler: gcc
       r:
         - release
-      r_check_args: '--use-valgrind --as-cran'
+      r_check_args: '--use-valgrind'
       addons:
         apt:
           packages:
             - valgrind
-      env: OS=fedora VALGRIND_OPTS='--leak-check=full --track-origins=yes'
+      env: OS=fedora'
 
 
 
