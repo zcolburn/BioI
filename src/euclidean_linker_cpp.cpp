@@ -184,7 +184,9 @@ Rcpp::NumericVector euclidean_linker_cpp(
         else if(g_array[fp] != g_array[csp]){
           // logf << "Starting type 4 linkage.\n";
           int fp_gn=fig_array[fp];
+          if(fp_gn == -1){fp_gn=0;}
           int sp_gn=fig_array[csp];
+          if(sp_gn == -1){sp_gn=0;}
           int start=fp_gn;
           int old_g=g_array[csp];
           int new_g=g_array[fp];
