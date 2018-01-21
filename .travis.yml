@@ -7,43 +7,56 @@ cache: packages
 matrix:
   include:
   # linux builds
-    # fedora builds
-    #- os: linux
-    #  compiler: clang
-    #  r:
-    #    - release
-    #    - devel
-    #  r_check_args: '--use-valgrind --as-cran'
-    #  addons:
-    #    apt:
-    #      packages:
-    #        - valgrind
-    #  env: OS=fedora VALGRIND_OPTS='--leak-check=full --track-origins=yes'
+     fedora builds
+    - os: linux
+      compiler: clang
+      r: release
+      r_check_args: '--as-cran'
+      env: OS=fedora
 
     - os: linux
       compiler: gcc
       r: release
-      r_check_args: '--use-valgrind'
-      addons:
-        apt:
-          packages:
-            - valgrind
-      env: OS=debian' VALGRIND_OPTS='--leak-check=full --track-origins=yes'
+      r_check_args: '--as-cran'
+      env: OS=fedora
+
+    - os: linux
+      compiler: clang
+      r: devel
+      r_check_args: '--as-cran'
+      env: OS=fedora
+
+    - os: linux
+      compiler: gcc
+      r: devel
+      r_check_args: '--as-cran'
+      env: OS=fedora
 
     - os: linux
       compiler: gcc
       r: release
       r_check_args: '--as-cran'
       env: OS=debian'
+      # Report coverage for this build (release on debian).
+      r_packages:
+        - covr
+      after_success:
+        - Rscript -e 'covr::codecov()'
 
+    - os: linux
+      compiler: gcc
+      r: devel
+      r_check_args: '--as-cran'
+      env: OS=debian'
 
+    - os: osx
+      r: release
+      r_check_args: '--as-cran'
 
-r_packages:
-  - covr
+    - os: osx
+      r: devel
+      r_check_args: '--as-cran'
 
-# Report coverage for the release version.
-after_success:
-  - test $TRAVIS_R_VERSION_STRING = 'release' && Rscript -e 'covr::codecov()'
 
 notifications:
   email: false
