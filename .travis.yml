@@ -7,6 +7,14 @@ cache: packages
 matrix:
   include:
     - os: linux
+      r: release
+      r_check_args: '--as-cran'
+
+    - os: linux
+      r: devel
+      r_check_args: '--as-cran'
+
+    - os: linux
       compiler: clang
       r: release
       r_check_args: '--as-cran'
@@ -47,7 +55,7 @@ matrix:
       r_check_args: '--as-cran'
 
 
-# Report coverage for this build (release on debian).
+# Report coverage.
 r_packages:
   - covr
 after_success:
@@ -55,4 +63,4 @@ after_success:
 
 
 notifications:
-  email: false
+  email: true
