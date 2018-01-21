@@ -59,16 +59,10 @@ Rcpp::NumericVector euclidean_linker_cpp(
   //logf << "np: " << np << "\n";
 
   // Initialize group_array (g_array).
-  std::vector<int> g_array(np);
-  for(int i=0;i<np;i++){
-    g_array[i]=0;
-  }
+  std::vector<int> g_array(np, -1);
 
   // Initialize first_in_group_array (fig_array).
-  std::vector<int> fig_array(np);
-  for(int i=0;i<np;i++){
-    fig_array[i]=-1;
-  }
+  std::vector<int> fig_array(np, -1);
 
   // Create progress bar
   int num_bar_elements=50;
@@ -98,133 +92,119 @@ Rcpp::NumericVector euclidean_linker_cpp(
     //logf << "============= New fp =============\n";
     //logf << "fp: " << fp << "\n";
     int sp=fp+1;
-    if(sp == np){break;}
+    if(sp == np){
+      if(g_array[fp] == 0){
+        g_array[fp]=gn;
+      }
+      break;
+    }
     // Compare the fp to multiple sp, but only as many as make sense to compare.
     // Figure out which is the maximum sp to compare.
-    if(sp != np){
-      int max_sp=sp;
-      //logf << "Starting 'while' 1.\n";
-      for(int i=sp;i<np;i++){
-        if(!(abs(input(fp,0)-input(max_sp,0)) <= critDist)){
-          break;
-        }else{
-          max_sp++;
-        }
+    int max_sp=sp;
+    //logf << "Starting 'while' 1.\n";
+    for(int i=sp+1;i<np;i++){
+      if((abs(input(fp,0)-input(max_sp,0)) <= critDist)){
+        max_sp++;
+      }else{
+        break;
       }
-      //logf << "max_sp: " << max_sp << "\n";
-      //logf << "max_sp-sp+1: " << max_sp-sp+1 << "\n";
-
-      // Initialize all elements of sp_indices to the corresponding sp.
-      std::vector<int> sp_indices(max_sp-sp+1);
-      //logf << "sp_indices created.\n";
-      for(int i=0;i<(max_sp-sp+1);i++){
-        sp_indices[i]=sp+i;
-      }
-      //logf << "sp_indices populated.\n";
-      // Send to log
-      // for(int k=0;k<(max_sp-sp+1);k++){
-      //   //logf << sp_indices[k] << " ";
-      // }
-      //logf << "\n";
-
-      // Determine how many sp are valid for this fp.
-      int num_valid_sp=0;
-      for(int i=0;i<(max_sp-sp+1);i++){
-        if(sp_indices[i] == -1){break;}
-        num_valid_sp++;
-      }
-      //logf << "num_valid_sp: " << num_valid_sp << "\n";
-
-      // If there are no valid sp, then set a group number for this fp and skip
-      // to the next fp.
-      if(num_valid_sp == 0){
-        //logf << "num_valid_sp is 0.\n";
-        g_array[fp]=gn;
-        gn++;
-        continue;
-        //logf << "Finished num_valid_sp is 0 section.\n";
-      }
-
-      // Determine the index of the max_sp for this fp.
-      int max_sp_index = sp_indices[num_valid_sp-1];
-
-      // For each valid sp, determine whether it is close enough to fp for
-      // linkage. If it is then link it.
-      //
-      // csp = current second point
-      int i=0;
-      //logf << "Entering main 'while'.\n";
-      while(
-        (i < (max_sp-sp+1)) &&
-          (sp_indices[i] != -1)
-      ){
-        //logf << "Inside main 'while'.\n";
-        // Get squared distance between fp and the given sp in sp_indices.
-        int csp=sp_indices[i];
-        //logf << "csp: " << csp << "\n";
-        double sd = 0;
-        for(int d=0;d<nDim;d++){
-          sd += pow(input(fp,d)-input(csp,d), 2);
-          if(sd > scd){
-            break;
-          }
-        }
-        if(sd > scd){
-          //logf << "Point not linked.\n";
-          i++;
-          continue;
-        }
-        // Perform linkage.
-        if(sd <= scd){
-          //logf << "Performing linkage.\n";
-          if((g_array[fp] == 0) && (g_array[csp] == 0)){
-            //logf << "Starting type 1 linkage.\n";
-            g_array[fp]=gn;
-            g_array[csp]=gn;
-            //logf << "Updated group numbers.\n";
-            fig_array[gn]=fp;
-            //logf << "Updated fig_array.\n";
-            gn++;
-            //logf << "Completed type 1 linkage.\n";
-          }
-          else if((g_array[csp] != 0) && (g_array[fp] == 0)){
-            //logf << "Starting type 2 linkage.\n";
-            g_array[fp]=g_array[csp];
-            //logf << "Completed type 2 linkage.\n";
-          }
-          else if((g_array[fp] != 0) && (g_array[csp] == 0)){
-            //logf << "Starting type 3 linkage.\n";
-            g_array[csp]=g_array[fp];
-            //logf << "Completed type 3 linkage.\n";
-          }
-          else if(g_array[fp] != g_array[csp]){
-            //logf << "Starting type 4 linkage.\n";
-            int fp_gn=fig_array[fp];
-            int sp_gn=fig_array[csp];
-            int start=fp_gn;
-            int old_g=g_array[csp];
-            int new_g=g_array[fp];
-            if(sp_gn < start){
-              start=sp_gn;
-              old_g=g_array[fp];
-              new_g=g_array[csp];
-            }
-            for(int j=start;j<=max_sp_index;j++){
-              if(g_array[j] == old_g){
-                g_array[j]=new_g;
-              }
-            }
-            //logf << "Completed type 4 linkage.\n";
-          }
-        }
-
-        // Move to the next index in sp_indices.
-        i++;
-      }
-
-    }else{
-      g_array[fp]=gn;
     }
+    //logf << "max_sp: " << max_sp << "\n";
+    //logf << "max_sp-sp+1: " << max_sp-sp+1 << "\n";
+
+    // Initialize all elements of sp_indices to the corresponding sp.
+    std::vector<int> sp_indices(max_sp-sp+1);
+    //logf << "sp_indices created.\n";
+    for(int i=0;i<(max_sp-sp+1);i++){
+      sp_indices[i]=sp+i;
+    }
+    //logf << "sp_indices populated.\n";
+    // Send to log
+    // for(int k=0;k<(max_sp-sp+1);k++){
+    //   //logf << sp_indices[k] << " ";
+    // }
+    //logf << "\n";
+
+    // Determine how many sp are valid for this fp.
+    int num_valid_sp=sp_indices.size();
+    //logf << "num_valid_sp: " << num_valid_sp << "\n";
+
+    // Determine the index of the max_sp for this fp.
+    int max_sp_index = sp_indices[num_valid_sp-1];
+
+    // For each valid sp, determine whether it is close enough to fp for
+    // linkage. If it is then link it.
+    //
+    // csp = current second point
+    int i=0;
+    //logf << "Entering main 'while'.\n";
+    while(
+      (i < (max_sp-sp+1))
+    ){
+      //logf << "Inside main 'while'.\n";
+      // Get squared distance between fp and the given sp in sp_indices.
+      int csp=sp_indices[i];
+      //logf << "csp: " << csp << "\n";
+      double sd = 0;
+      for(int d=0;d<nDim;d++){
+        sd += pow(input(fp,d)-input(csp,d), 2);
+        if(sd > scd){
+          break;
+        }
+      }
+      if(sd > scd){
+        //logf << "Point not linked.\n";
+        i++;
+        continue;
+      }
+      // Perform linkage.
+      if(sd <= scd){
+        //logf << "Performing linkage.\n";
+        if((g_array[fp] == 0) && (g_array[csp] == 0)){
+          //logf << "Starting type 1 linkage.\n";
+          g_array[fp]=gn;
+          g_array[csp]=gn;
+          //logf << "Updated group numbers.\n";
+          fig_array[gn]=fp;
+          //logf << "Updated fig_array.\n";
+          gn++;
+          //logf << "Completed type 1 linkage.\n";
+        }
+        else if((g_array[csp] != 0) && (g_array[fp] == 0)){
+          //logf << "Starting type 2 linkage.\n";
+          g_array[fp]=g_array[csp];
+          //logf << "Completed type 2 linkage.\n";
+        }
+        else if((g_array[fp] != 0) && (g_array[csp] == 0)){
+          //logf << "Starting type 3 linkage.\n";
+          g_array[csp]=g_array[fp];
+          //logf << "Completed type 3 linkage.\n";
+        }
+        else if(g_array[fp] != g_array[csp]){
+          //logf << "Starting type 4 linkage.\n";
+          int fp_gn=fig_array[fp];
+          int sp_gn=fig_array[csp];
+          int start=fp_gn;
+          int old_g=g_array[csp];
+          int new_g=g_array[fp];
+          if(sp_gn < start){
+            start=sp_gn;
+            old_g=g_array[fp];
+            new_g=g_array[csp];
+          }
+          for(int j=start;j<=max_sp_index;j++){
+            if(g_array[j] == old_g){
+              g_array[j]=new_g;
+            }
+          }
+          //logf << "Completed type 4 linkage.\n";
+        }
+      }
+
+      // Move to the next index in sp_indices.
+      i++;
+    }
+
 
     // Account for the case in which no links were made. Assign fp to the next
     // group number.
@@ -232,6 +212,7 @@ Rcpp::NumericVector euclidean_linker_cpp(
       g_array[fp]=gn;
       gn++;
     }
+
 
     // Progress bar.
     if(use_prog_bar){
