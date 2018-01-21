@@ -37,11 +37,6 @@ matrix:
       r: release
       r_check_args: '--as-cran'
       env: OS=debian'
-      # Report coverage for this build (release on debian).
-      r_packages:
-        - covr
-      after_success:
-        - Rscript -e 'covr::codecov()'
 
     - os: linux
       compiler: gcc
@@ -53,9 +48,12 @@ matrix:
       r: release
       r_check_args: '--as-cran'
 
-    - os: osx
-      r: devel
-      r_check_args: '--as-cran'
+
+# Report coverage for this build (release on debian).
+r_packages:
+  - covr
+after_success:
+  - test $TRAVIS_R_VERSION_STRING = 'release' && Rscript -e 'covr::codecov()'
 
 
 notifications:
