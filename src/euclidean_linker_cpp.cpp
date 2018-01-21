@@ -41,25 +41,25 @@ Rcpp::NumericVector euclidean_linker_cpp(
     double critDist,
     bool use_prog_bar = true
 ) {
-  //std::ofstream logf("log.txt");
-  //logf << "Creating log file.\n";
+  //std::ofstream // logf("log.txt");
+  // logf << "Creating log file.\n";
 
   // Initialize variables.
   //
   // Get squared critical distance.
   double scd = pow(critDist,2);
-  //logf << "scd: " << scd << "\n";
+  // logf << "scd: " << scd << "\n";
 
   // Get the number of dimensions to evaluate.
   int nDim=input.ncol();
-  //logf << "nDim: " << nDim << "\n";
+  // logf << "nDim: " << nDim << "\n";
 
   // Get the number of points to evaluate.
   int np=input.nrow();
-  //logf << "np: " << np << "\n";
+  // logf << "np: " << np << "\n";
 
   // Initialize group_array (g_array).
-  std::vector<int> g_array(np, -1);
+  std::vector<int> g_array(np, 0);
 
   // Initialize first_in_group_array (fig_array).
   std::vector<int> fig_array(np, -1);
@@ -82,15 +82,15 @@ Rcpp::NumericVector euclidean_linker_cpp(
   // np = number of points to evaluate
   // nDim = number of dimensions to evaluate
   // gn = group number
-  //logf << "Entering main loop\n";
+  // logf << "Entering main loop\n";
   if(use_prog_bar){
     Rcpp::Rcout << "||";
   }
   int gn=1;
   for(int fp=0;fp<np-1;fp++){
     Rcpp::checkUserInterrupt();
-    //logf << "============= New fp =============\n";
-    //logf << "fp: " << fp << "\n";
+    // logf << "============= New fp =============\n";
+    // logf << "fp: " << fp << "\n";
     int sp=fp+1;
     if(sp == np){
       if(g_array[fp] == 0){
@@ -101,7 +101,7 @@ Rcpp::NumericVector euclidean_linker_cpp(
     // Compare the fp to multiple sp, but only as many as make sense to compare.
     // Figure out which is the maximum sp to compare.
     int max_sp=sp;
-    //logf << "Starting 'while' 1.\n";
+    // logf << "Starting 'while' 1.\n";
     for(int i=sp+1;i<np;i++){
       if((abs(input(fp,0)-input(max_sp,0)) <= critDist)){
         max_sp++;
@@ -109,26 +109,26 @@ Rcpp::NumericVector euclidean_linker_cpp(
         break;
       }
     }
-    //logf << "max_sp: " << max_sp << "\n";
-    //logf << "max_sp-sp+1: " << max_sp-sp+1 << "\n";
+    // logf << "max_sp: " << max_sp << "\n";
+    // logf << "max_sp-sp+1: " << max_sp-sp+1 << "\n";
 
     // Determine how many sp are valid for this fp.
     int num_valid_sp=max_sp-sp+1;
 
     // Initialize all elements of sp_indices to the corresponding sp.
     std::vector<int> sp_indices(num_valid_sp, sp);
-    //logf << "sp_indices created.\n";
+    // logf << "sp_indices created.\n";
 
-    //logf << "num_valid_sp: " << num_valid_sp << "\n";
+    // logf << "num_valid_sp: " << num_valid_sp << "\n";
     for(int i=1;i<num_valid_sp;i++){
       sp_indices[i]=sp_indices[i-1]+1;
     }
-    //logf << "sp_indices populated.\n";
+    // logf << "sp_indices populated.\n";
     // Send to log
     // for(int k=0;k<num_valid_sp;k++){
-    //   //logf << sp_indices[k] << " ";
+      // logf << sp_indices[k] << " ";
     // }
-    //logf << "\n";
+    // logf << "\n";
 
     // Determine the index in input of the max_sp for this fp.
     int max_sp_index = sp_indices[num_valid_sp-1];
@@ -138,12 +138,14 @@ Rcpp::NumericVector euclidean_linker_cpp(
     //
     // csp = current second point
     int i=0;
-    //logf << "Entering main 'while'.\n";
+    // logf << "Entering main 'while'.\n";
     while(i < num_valid_sp){
-      //logf << "Inside main 'while'.\n";
+      // logf << "Inside main 'while'.\n";
       // Get squared distance between fp and the given sp in sp_indices.
       int csp=sp_indices[i];
-      //logf << "csp: " << csp << "\n";
+      // logf << "csp: " << csp << "\n";
+      // logf << "fp_input col 0: " << input(fp,0) << "\n";
+      // logf << "csp_input col 0: " << input(csp,0) << "\n";
       double sd = 0;
       for(int d=0;d<nDim;d++){
         sd += pow(input(fp,d)-input(csp,d), 2);
@@ -152,35 +154,35 @@ Rcpp::NumericVector euclidean_linker_cpp(
         }
       }
       if(sd > scd){
-        //logf << "Point not linked.\n";
+        // logf << "Point not linked.\n";
         i++;
         continue;
       }
       // Perform linkage.
       if(sd <= scd){
-        //logf << "Performing linkage.\n";
+        // logf << "Performing linkage.\n";
         if((g_array[fp] == 0) && (g_array[csp] == 0)){
-          //logf << "Starting type 1 linkage.\n";
+          // logf << "Starting type 1 linkage.\n";
           g_array[fp]=gn;
           g_array[csp]=gn;
-          //logf << "Updated group numbers.\n";
+          // logf << "Updated group numbers.\n";
           fig_array[gn]=fp;
-          //logf << "Updated fig_array.\n";
+          // logf << "Updated fig_array.\n";
           gn++;
-          //logf << "Completed type 1 linkage.\n";
+          // logf << "Completed type 1 linkage.\n";
         }
         else if((g_array[csp] != 0) && (g_array[fp] == 0)){
-          //logf << "Starting type 2 linkage.\n";
+          // logf << "Starting type 2 linkage.\n";
           g_array[fp]=g_array[csp];
-          //logf << "Completed type 2 linkage.\n";
+          // logf << "Completed type 2 linkage.\n";
         }
         else if((g_array[fp] != 0) && (g_array[csp] == 0)){
-          //logf << "Starting type 3 linkage.\n";
+          // logf << "Starting type 3 linkage.\n";
           g_array[csp]=g_array[fp];
-          //logf << "Completed type 3 linkage.\n";
+          // logf << "Completed type 3 linkage.\n";
         }
         else if(g_array[fp] != g_array[csp]){
-          //logf << "Starting type 4 linkage.\n";
+          // logf << "Starting type 4 linkage.\n";
           int fp_gn=fig_array[fp];
           int sp_gn=fig_array[csp];
           int start=fp_gn;
@@ -196,7 +198,7 @@ Rcpp::NumericVector euclidean_linker_cpp(
               g_array[j]=new_g;
             }
           }
-          //logf << "Completed type 4 linkage.\n";
+          // logf << "Completed type 4 linkage.\n";
         }
       }
 
@@ -241,7 +243,7 @@ Rcpp::NumericVector euclidean_linker_cpp(
     Rcpp::Rcout << "\n";
   }
 
-  //logf << "Escaped main loop!";
+  // logf << "Escaped main loop!";
 
   // Initialize output group vector.
   Rcpp::NumericVector output(input.nrow());
