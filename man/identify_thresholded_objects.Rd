@@ -25,14 +25,14 @@ are the same integer corresponding to that object's cluster number.
 }
 \examples{
 # Generate a random matrix.
-#set.seed(10)
-#mat <- matrix(runif(70), nrow = 7)
+set.seed(10)
+mat <- matrix(runif(70), nrow = 7)
 
 # Arbitrarily say that everything below 0.8 is background.
-#mat[mat < 0.8] <- 0
+mat[mat < 0.8] <- 0
 
 # Find blobs.
-#identify_thresholded_objects(mat)
+identify_thresholded_objects(mat)
 
 }
 \author{

@@ -47,7 +47,7 @@ mat <- matrix(runif(70), nrow = 7)
 logical_mat <- mat > 0.8
 
 # Find blobs.
-#find_blobs(logical_mat)
+find_blobs(logical_mat)
 
 }
 \author{

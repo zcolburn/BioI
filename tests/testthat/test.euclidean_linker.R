@@ -35,16 +35,15 @@ test_that(
       all(result == 1)
     })
 
-    expect_equal({
+    expect_true({
       set.seed(10)
       input <- as.matrix(data.frame(x = rnorm(10), y = rnorm(10)))
       crit_dist <- 0.4
-      euclidean_linker(input, crit_dist)
-    },
-    c(7, 6, 2, 4, 8, 9, 3, 5, 1, 6)
-    )
+      result <- euclidean_linker(input, crit_dist)
+      (result[2] == tail(result, 1) && (length(unique(result))  == 9))
+    })
 
-    expect_equal({
+    expect_true({
       set.seed(10)
       num <- 1000
       input <- as.matrix(data.frame(
@@ -59,10 +58,8 @@ test_that(
         partition_req = 200,
         run_parallel = FALSE
       )
-      unique(result)
-    },
-      c(3, 2, 1)
-    )
+      length(unique(result)) == 3
+    })
 
     expect_equal({
       mat <- matrix(TRUE, nrow = 501, ncol = 501)

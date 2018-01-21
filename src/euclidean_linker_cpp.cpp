@@ -112,24 +112,25 @@ Rcpp::NumericVector euclidean_linker_cpp(
     //logf << "max_sp: " << max_sp << "\n";
     //logf << "max_sp-sp+1: " << max_sp-sp+1 << "\n";
 
+    // Determine how many sp are valid for this fp.
+    int num_valid_sp=max_sp-sp+1;
+
     // Initialize all elements of sp_indices to the corresponding sp.
-    std::vector<int> sp_indices(max_sp-sp+1);
+    std::vector<int> sp_indices(num_valid_sp, sp);
     //logf << "sp_indices created.\n";
-    for(int i=0;i<(max_sp-sp+1);i++){
-      sp_indices[i]=sp+i;
+
+    //logf << "num_valid_sp: " << num_valid_sp << "\n";
+    for(int i=1;i<num_valid_sp;i++){
+      sp_indices[i]=sp_indices[i-1]+1;
     }
     //logf << "sp_indices populated.\n";
     // Send to log
-    // for(int k=0;k<(max_sp-sp+1);k++){
+    // for(int k=0;k<num_valid_sp;k++){
     //   //logf << sp_indices[k] << " ";
     // }
     //logf << "\n";
 
-    // Determine how many sp are valid for this fp.
-    int num_valid_sp=sp_indices.size();
-    //logf << "num_valid_sp: " << num_valid_sp << "\n";
-
-    // Determine the index of the max_sp for this fp.
+    // Determine the index in input of the max_sp for this fp.
     int max_sp_index = sp_indices[num_valid_sp-1];
 
     // For each valid sp, determine whether it is close enough to fp for
@@ -138,9 +139,7 @@ Rcpp::NumericVector euclidean_linker_cpp(
     // csp = current second point
     int i=0;
     //logf << "Entering main 'while'.\n";
-    while(
-      (i < (max_sp-sp+1))
-    ){
+    while(i < num_valid_sp){
       //logf << "Inside main 'while'.\n";
       // Get squared distance between fp and the given sp in sp_indices.
       int csp=sp_indices[i];
