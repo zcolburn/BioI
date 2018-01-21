@@ -7,7 +7,7 @@ cache: packages
 matrix:
   include:
   # linux builds
-     fedora builds
+    # fedora builds
     - os: linux
       compiler: clang
       r: release
