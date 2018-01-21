@@ -2,6 +2,7 @@
 using namespace Rcpp;
 
 #include <cmath>
+#include <vector>
 
 
 // #include <fstream>
@@ -58,13 +59,13 @@ Rcpp::NumericVector euclidean_linker_cpp(
   //logf << "np: " << np << "\n";
 
   // Initialize group_array (g_array).
-  int* g_array = new int[np];
+  std::vector<int> g_array(np);
   for(int i=0;i<np;i++){
     g_array[i]=0;
   }
 
   // Initialize first_in_group_array (fig_array).
-  int* fig_array = new int[np];
+  std::vector<int> fig_array(np);
   for(int i=0;i<np;i++){
     fig_array[i]=-1;
   }
@@ -114,7 +115,7 @@ Rcpp::NumericVector euclidean_linker_cpp(
       //logf << "max_sp-sp+1: " << max_sp-sp+1 << "\n";
 
       // Initialize all elements of sp_indices to the corresponding sp.
-      int* sp_indices = new int[max_sp-sp+1];
+      std::vector<int> sp_indices(max_sp-sp+1);
       //logf << "sp_indices created.\n";
       for(int i=0;i<(max_sp-sp+1);i++){
         sp_indices[i]=sp+i;
@@ -140,7 +141,6 @@ Rcpp::NumericVector euclidean_linker_cpp(
         //logf << "num_valid_sp is 0.\n";
         g_array[fp]=gn;
         gn++;
-        delete[] sp_indices;
         continue;
         //logf << "Finished num_valid_sp is 0 section.\n";
       }
@@ -222,8 +222,6 @@ Rcpp::NumericVector euclidean_linker_cpp(
         i++;
       }
 
-      delete[] sp_indices;
-
     }else{
       g_array[fp]=gn;
     }
@@ -272,10 +270,6 @@ Rcpp::NumericVector euclidean_linker_cpp(
   for(int i=0;i<np;i++){
     output(i)=g_array[i];
   }
-
-  // Clean up.
-  delete[] g_array;
-  delete[] fig_array;
 
   // Return output.
   return output;

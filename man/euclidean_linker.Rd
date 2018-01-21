@@ -43,11 +43,11 @@ the provided critical distance from each other.
 }
 \examples{
 # Generate random data.
-set.seed(10)
-input <- as.matrix(data.frame(x=rnorm(10),y=rnorm(10)))
+#set.seed(10)
+#input <- as.matrix(data.frame(x=rnorm(10),y=rnorm(10)))
 
 # Perform linking.
-euclidean_linker(input, 0.4)
+#euclidean_linker(input, 0.4)
 
 }
 \author{

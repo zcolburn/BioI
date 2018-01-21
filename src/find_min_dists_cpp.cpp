@@ -64,7 +64,7 @@ Rcpp::DataFrame find_min_dists_cpp(NumericMatrix mOne, NumericMatrix mTwo) {
   //
   // hp = home point (i.e. from matrix one)
   // fp = foreign point (i.e. from matrix two)
-  for(float hp=0;hp<mon;hp++){
+  for(int hp=0;hp<mon;hp++){
     // bi = best index (i.e. the index that minimizes the euclidean distance)
     // bsd = best squared distance
     //
@@ -80,7 +80,7 @@ Rcpp::DataFrame find_min_dists_cpp(NumericMatrix mOne, NumericMatrix mTwo) {
     }
 
 
-    for(float fp=1;fp<mtn;fp++){
+    for(int fp=1;fp<mtn;fp++){
       // csd = current squared distance
       double csd = 0.0;
       for(int i=0;i<dim;i++){
@@ -98,7 +98,7 @@ Rcpp::DataFrame find_min_dists_cpp(NumericMatrix mOne, NumericMatrix mTwo) {
     minDists(hp) = sqrt(bsd);
   }
 
-  for(float i=0;i<mon;i++){
+  for(int i=0;i<mon;i++){
     matchedIndices(i) += 1;
   }
 
