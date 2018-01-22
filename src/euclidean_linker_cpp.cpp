@@ -103,7 +103,7 @@ Rcpp::NumericVector euclidean_linker_cpp(
     int max_sp=sp;
     // logf << "Starting 'while' 1.\n";
     for(int i=sp+1;i<np;i++){
-      if((abs(input(fp,0)-input(max_sp,0)) <= critDist)){
+      if((fabs(input(fp,0)-input(max_sp,0)) <= critDist)){
         max_sp++;
       }else{
         break;
