@@ -8,71 +8,23 @@ matrix:
   include:
     - os: linux
       r: release
-      r_check_args: '--as-cran'
-      env: OS=solaris
-
-    - os: linux
-      r: devel
-      r_check_args: '--as-cran'
-      env: OS=solaris
-
-    - os: linux
-      r: release
-      r_check_args: '--as-cran'
-      env: OS=ubuntu
-
-    - os: linux
-      r: devel
-      r_check_args: '--as-cran'
-      env: OS=ubuntu
-
-    - os: linux
-      compiler: clang
-      r: release
-      r_check_args: '--as-cran'
-      env: OS=fedora
-
-    - os: linux
       compiler: gcc
-      r: release
       r_check_args: '--as-cran'
-      env: OS=fedora
 
     - os: linux
-      compiler: clang
       r: devel
-      r_check_args: '--as-cran'
-      env: OS=fedora
-
-    - os: linux
       compiler: gcc
-      r: devel
       r_check_args: '--as-cran'
-      env: OS=fedora
 
     - os: linux
-      compiler: gcc
       r: release
-      r_check_args: '--as-cran'
-      env: OS=debian'
-
-    - os: linux
-      compiler: gcc
-      r: devel
-      r_check_args: '--as-cran'
-      env: OS=debian'
-
-    - os: linux
       compiler: clang
-      r: release
       r_check_args: '--as-cran'
-      env: OS=debian'
 
     - os: linux
-      compiler: clang
       r: devel
+      compiler: clang
       r_check_args: '--as-cran'
-      env: OS=debian'
 
     - os: osx
       r: release
