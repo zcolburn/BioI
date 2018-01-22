@@ -62,6 +62,18 @@ matrix:
       r_check_args: '--as-cran'
       env: OS=debian'
 
+    - os: linux
+      compiler: clang
+      r: release
+      r_check_args: '--as-cran'
+      env: OS=debian'
+
+    - os: linux
+      compiler: clang
+      r: devel
+      r_check_args: '--as-cran'
+      env: OS=debian'
+
     - os: osx
       r: release
       r_check_args: '--as-cran'
