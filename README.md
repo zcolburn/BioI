@@ -3,6 +3,7 @@
 [![Travis-CI Build Status](https://travis-ci.org/zcolburn/Bioi.svg?branch=master)](https://travis-ci.org/zcolburn/Bioi)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/zcolburn/Bioi?branch=master&svg=true)](https://ci.appveyor.com/project/zcolburn/Bioi)
 [![codecov](https://codecov.io/gh/zcolburn/Bioi/branch/master/graph/badge.svg)](https://codecov.io/gh/zcolburn/Bioi)
+[![](https://cranlogs.r-pkg.org/badges/Bioi)](https://cran.r-project.org/package=Bioi)
 
 
 ## Overview
@@ -41,5 +42,3 @@ A common image processing task is to group all connected "object-positive" pixel
 
 ### Determine the nearest neighbor in an alternate set of points
 Photoactivated localization microscopy (PALM) data results in large numbers of protein localizations being identified. A common task when working with dual channel PALM data is to identify the distance separating points in one data set from points in a second data set. The function `find_min_dists` identifies the nearest neighbor to a point in a second data set and its distance from the point of interest.
-
-
