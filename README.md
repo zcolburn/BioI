@@ -3,7 +3,11 @@
 [![Travis-CI Build Status](https://travis-ci.org/zcolburn/Bioi.svg?branch=master)](https://travis-ci.org/zcolburn/Bioi)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/zcolburn/Bioi?branch=master&svg=true)](https://ci.appveyor.com/project/zcolburn/Bioi)
 [![codecov](https://codecov.io/gh/zcolburn/Bioi/branch/master/graph/badge.svg)](https://codecov.io/gh/zcolburn/Bioi)
+<<<<<<< HEAD
 [![](https://cranlogs.r-pkg.org/badges/Bioi)](https://cran.r-project.org/package=Bioi)
+=======
+[![DOI](https://zenodo.org/badge/110783607.svg)](https://zenodo.org/badge/latestdoi/110783607)
+>>>>>>> ab1a4da00acda630263194850f8a9526ea70185e
 
 
 ## Overview
