@@ -9,9 +9,7 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
-
-* NOTE Maintainer: 'Zachary Colburn <zcolburn@gmail.com>'
+0 errors | 0 warnings | 0 notes
 
 
 ## Reverse dependencies

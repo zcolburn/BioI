@@ -4,8 +4,14 @@
 \alias{find_blobs}
 \title{Assign all neighboring pixels the same group number.}
 \usage{
-find_blobs(arr, use_prog_bar = TRUE, run_parallel = FALSE,
-  num_cores = NULL, partition_req = NULL, parallel_call_depth = 3)
+find_blobs(
+  arr,
+  use_prog_bar = TRUE,
+  run_parallel = FALSE,
+  num_cores = NULL,
+  partition_req = NULL,
+  parallel_call_depth = 3
+)
 }
 \arguments{
 \item{arr}{A vector, matrix, or 3-dimensional array where object-positive

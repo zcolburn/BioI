@@ -42,7 +42,7 @@
   min_gap = NULL
 ) {
   # Perform essential type checking.
-  assert_that((class(input) == "matrix"))
+  assert_that((class(input)[1] == "matrix"))
   assert_that(is.number(min_gap))
 
   # Define the ungrouped value. Don't change this.

@@ -21,7 +21,7 @@
 #'
 #' @examples
 #' # Function call
-#' \dontrun{euclidean_linker_cpp(inputMatrix, critDist)}
+#' \dontrun{.euclidean_linker_cpp(inputMatrix, critDist)}
 #'
 #' @import Rcpp
 #'
@@ -50,6 +50,7 @@
 #' @author Zach Colburn
 #'
 #' @examples
+#' \dontrun{
 #' set.seed(10)
 #'
 #' mOne <- as.matrix(data.frame(
@@ -64,7 +65,8 @@
 #' z = runif(20)
 #' ))
 #'
-#' find_min_dists_cpp(mOne, mTwo)
+#' .find_min_dists_cpp(mOne, mTwo)
+#'}
 #'
 #' @import Rcpp
 #'

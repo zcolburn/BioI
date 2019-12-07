@@ -52,7 +52,7 @@ find_blobs <- function(
   # Perform type checking.
   assert_that(is.vector(arr) || is.matrix(arr) || is.array(arr))
   assert_that(length(arr) >= 1)
-  assert_that(class(arr[1]) == "logical")
+  assert_that(class(arr[1])[1] == "logical")
   assert_that(noNA(arr))
   if(is.null(partition_req)){partition_req <- 1000000}
   assert_that(
@@ -62,7 +62,7 @@ find_blobs <- function(
   )
 
   # Get object class and attributes.
-  initial_class <- class(arr)
+  initial_class <- class(arr)[1]
   arr_attributes <- attributes(arr)
 
   # Convert arr to an array and store object indices in "input".
@@ -150,7 +150,7 @@ identify_thresholded_objects <- function(img, pixRange = 50){
   # Perform type checking. This function was meant to receive different inputs
   # than the function find_blobs which replaces it. Type checking is performed
   # to ensure object inputs are backwards compatible.
-  assert_that(class(img) == "matrix")
+  assert_that(class(img)[1] == "matrix")
   assert_that(length(img) >= 1)
   assert_that(class(img[1]) %in% c("integer", "numeric"))
   assert_that(nrow(img) >= 1)

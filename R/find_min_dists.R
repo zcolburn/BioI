@@ -39,13 +39,13 @@
 #' @importFrom assertthat assert_that
 find_min_dists <- function(mOne, mTwo) {
   # Perform type checking.
-  assert_that(class(mOne) == "matrix")
+  assert_that(class(mOne)[1] == "matrix")
   assert_that(length(mOne) >= 1)
   assert_that(class(mOne[1]) %in% c("integer", "numeric"))
   assert_that(nrow(mOne) >= 1)
   assert_that(ncol(mOne) > 0)
 
-  assert_that(class(mTwo) == "matrix")
+  assert_that(class(mTwo)[1] == "matrix")
   assert_that(length(mTwo) >= 1)
   assert_that(class(mTwo[1]) %in% c("integer", "numeric"))
   assert_that(nrow(mTwo) >= 1)

@@ -48,8 +48,8 @@ euclidean_linker <- function(
   parallel_call_depth = 3,
   ...
 ) {
-  assert_that(class(input) == "matrix")
-  assert_that(class(input[1]) %in% c("integer", "numeric"))
+  assert_that(class(input)[1] == "matrix")
+  assert_that(class(input[1])[1] %in% c("integer", "numeric"))
   assert_that(nrow(input) >= 1)
   assert_that(nrow(input) < 2147483646)# The C++ max limit for an int minus 1.
   assert_that(ncol(input) > 0)

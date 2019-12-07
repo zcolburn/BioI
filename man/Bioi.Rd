@@ -3,7 +3,6 @@
 \docType{package}
 \name{Bioi}
 \alias{Bioi}
-\alias{Bioi-package}
 \title{\code{Bioi} package}
 \description{
 PALM/iPALM localization and biological image analysis functions.

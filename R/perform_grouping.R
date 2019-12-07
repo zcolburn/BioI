@@ -29,7 +29,7 @@
   # performed. This is meant mainly to ensure that data passed from the
   # function ".perform_partitioning" which is called by "euclidean_linker" is
   # in the correct format.
-  assert_that(class(input) == "matrix")
+  assert_that(class(input)[1] == "matrix")
   assert_that(class(input[1]) %in% c("integer", "numeric"))
   assert_that(nrow(input) >= 1)
 
