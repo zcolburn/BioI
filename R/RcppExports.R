@@ -40,7 +40,7 @@
 #' This function determines the distance between every point in data set 1 and
 #' the points in data set 2. Unlike this function's naive counterpart,
 #' find_min_dists, this function divides the PALM/iPALM localization data
-#' into blocks, opeartes on the data in each block, and then performs linking
+#' into blocks, operates on the data in each block, and then performs linking
 #' operations on neighboring blocks.
 #'
 #' @param mOne A numeric matrix where each row is a localization and each

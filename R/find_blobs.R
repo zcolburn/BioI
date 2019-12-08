@@ -120,7 +120,7 @@ find_blobs <- function(
 #' method.
 #'
 #' This function takes a matrix corresponding to a thresholded image and
-#' returns a matrix of the same size, where all adjacent, thesholded pixels
+#' returns a matrix of the same size, where all adjacent, thresholded pixels
 #' are the same integer corresponding to that object's cluster number.
 #'
 #' @param img A thresholded matrix (where non-object pixels are assigned a

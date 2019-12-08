@@ -38,7 +38,7 @@ The parallelized method works similarly to the partitioned method but operates i
 
 
 ### Connected component labeling
-A common image processing task is to group all connected "object-positive" pixels in an image into single groups. The connected component labeling function implemented here can be used on 1, 2, or 3-dimensional arrays representing 1, 2, or 3-dimensional "images". This functionality can be acessed using the `find_blobs` function.
+A common image processing task is to group all connected "object-positive" pixels in an image into single groups. The connected component labeling function implemented here can be used on 1, 2, or 3-dimensional arrays representing 1, 2, or 3-dimensional "images". This functionality can be accessed using the `find_blobs` function.
 
 
 ### Determine the nearest neighbor in an alternate set of points

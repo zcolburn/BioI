@@ -21,7 +21,8 @@
 #' be performed before terminating calls to run operations in parallel. The
 #' number of threads opened when running in parallel is equal to
 #' 2^(parallel_call_depth)*num_cores.
-#' @param min_gap The minimum width of any dimension created during paritioning.
+#' @param min_gap The minimum width of any dimension created during
+#' partitioning.
 #'
 #' @author Zach Colburn
 #'

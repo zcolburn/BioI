@@ -38,7 +38,8 @@ be performed before terminating calls to run operations in parallel. The
 number of threads opened when running in parallel is equal to
 2^(parallel_call_depth)*num_cores.}
 
-\item{min_gap}{The minimum width of any dimension created during paritioning.}
+\item{min_gap}{The minimum width of any dimension created during
+partitioning.}
 }
 \description{
 Group PALM/iPALM localizations based on their physical separation distance

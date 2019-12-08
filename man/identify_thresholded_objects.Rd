@@ -20,7 +20,7 @@ This function is deprecated. It now calls the more efficient find_blobs
 method.
 
 This function takes a matrix corresponding to a thresholded image and
-returns a matrix of the same size, where all adjacent, thesholded pixels
+returns a matrix of the same size, where all adjacent, thresholded pixels
 are the same integer corresponding to that object's cluster number.
 }
 \examples{
